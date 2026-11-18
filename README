@@ -1,41 +1,41 @@
-# Epidemiological Trend Forecasting & Visual Analytics
+# Epidemiological Time-Series Trend Forecasting & Visual Analytics
 
-An end-to-end time-series analytics and short-term forecasting pipeline built to track epidemiological progression across confirmed, recovered, and active case records—combining daily incidence rate engineering, rolling average smoothing, interactive visual analytics, and **Facebook Prophet** 7-day forward projections.
+An end-to-end epidemiological time-series analysis and forecasting pipeline built in Python using **Pandas**, **Facebook Prophet**, **Plotly**, and **Matplotlib** to track regional COVID-19 case trajectories, compute daily incidence rates and rolling averages, and generate 7-day forward projections with confidence intervals[cite: 14].
 
 ## Analytical Pipeline Flow
 
 ```text
-Raw Epidemiological Records (CSV / Excel Time-Series Data)
+Raw Daily Case Datasets (CSV / Excel: Confirmed, Recovered, Deaths)
         │
         ▼
-Data Cleaning & Datetime Standardization (pd.to_datetime -> Chronological Sorting)
+Data Wrangling & Datetime Standardization (pd.to_datetime & Regional Aggregation)
+        │
+        ├──▶ Time-Series Feature Engineering
+        │       ├── Active Cases Calculation (Confirmed - Recovered - Deaths)
+        │       ├── Daily Incidence Rate (.diff())
+        │       └── 7-Day Rolling Moving Average (.rolling(7).mean())
         │
         ▼
-Feature & Rate Engineering
-(Active Cases = Confirmed - Recovered - Deaths | Daily Incidence via .diff() | 7-Day Rolling Mean)
+Facebook Prophet Time-Series Forecasting (ds, y Schema)
         │
-        ├───────────────────────────────────────────┐
-        ▼                                           ▼
-Interactive Trend Visualization             Facebook Prophet Forecasting
-(Plotly & Matplotlib Growth Curves)         (ds / y Formatting -> 7-Day Future Horizon)
-                                                    │
-                                                    ▼
-                                    Predicted Trajectory & Uncertainty Intervals (yhat, yhat_lower, yhat_upper)
+        ▼
+7-Day Forward Projections (yhat, yhat_lower, yhat_upper) & Interactive Visuals (Plotly / Matplotlib)
 ```
 
 ## Key Technical Highlights
-- **Time-Series Aggregation & Rate Calculation:** Standardized multi-region daily case logs into chronological time-series pipelines, computing net active case loads, day-over-day new case velocity using `.diff()`, and 7-day rolling averages to smooth reporting noise.
-- **Interactive Visual Analytics:** Built interactive time-series growth curves and comparative regional trajectories using **Plotly** and **Matplotlib** to highlight inflection points and peak transmission windows.
-- **Additive Time-Series Forecasting with Prophet:** Formatted historical case series into Prophet's `ds` (datestamp) and `y` (target metric) schema to generate **7-day forward projections** complete with upper and lower confidence intervals (`yhat_lower`, `yhat_upper`) and trend/weekly seasonality decomposition plots.
+- **Multi-Source Time-Series Wrangling:** Consolidated daily confirmed, recovered, and mortality records into standardized date-indexed time-series tables across regional cohorts[cite: 14].
+- **Incidence & Trend Smoothing:** Engineered daily new-case velocity metrics using `.diff()` alongside 7-day rolling averages to filter reporting noise and highlight inflection points[cite: 14].
+- **Prophet Forecasting & Uncertainty Intervals:** Formatted historical trajectories into Prophet's `ds` (datestamp) and `y` (target metric) schema to generate 7-day forward forecasts with upper and lower confidence bounds (`yhat_lower`, `yhat_upper`)[cite: 14].
+- **Interactive & Static Visual Analytics:** Built interactive trajectory plots in **Plotly** and component/trend diagnostic charts in **Matplotlib**[cite: 14].
 
 ## Tech Stack
-- **Data Manipulation & Time-Series Processing:** Python, Pandas, NumPy
-- **Forecasting Engine:** Facebook Prophet (`prophet`)
-- **Data Visualization:** Plotly, Matplotlib
+- **Data Manipulation & Time-Series Processing:** Python, Pandas, NumPy[cite: 14]
+- **Forecasting Engine:** Facebook Prophet (`prophet`)[cite: 14]
+- **Data Visualization:** Plotly, Matplotlib[cite: 14]
 
 ## Setup & Execution
 1. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-2. Open the Jupyter Notebook in this repository (or launch in Google Colab) and run all cells sequentially to reproduce the rate calculations, interactive charts, and 7-day Prophet forecast diagnostics.
+2. Open the Jupyter Notebook in JupyterLab or Google Colab and run all cells to reproduce the incidence calculations, interactive charts, and 7-day Prophet forecast plots[cite: 14].
