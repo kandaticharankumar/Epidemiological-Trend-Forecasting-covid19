@@ -1,8 +1,41 @@
-# Epidemiological (COVID-19) Trend Forecasting & Time-Series Visual Analytics
+# Epidemiological Trend Forecasting & Visual Analytics
 
-An end-to-end data analytics and time-series modeling project exploring global infection spreads and generating 7-day forward forecasts with statistical confidence intervals.
+An end-to-end time-series analytics and short-term forecasting pipeline built to track epidemiological progression across confirmed, recovered, and active case records—combining daily incidence rate engineering, rolling average smoothing, interactive visual analytics, and **Facebook Prophet** 7-day forward projections.
 
-## Features
-- **Data Preprocessing & Aggregation:** Cleaned multi-national case records (`covid_19_clean_complete.csv`), analyzed state-level granularities for China, and isolated active/recovered/death metrics across 187+ countries.
-- **Exploratory Visual Analytics:** Plotted daily global confirmed trajectory curves, top 10 active case distribution rankings, and multi-country trajectory trends (India vs. US vs. China) using **Matplotlib** and **Seaborn**.
-- **Time-Series Forecasting:** Built an additive forecast pipeline using **Facebook Prophet** to forecast 7 days forward along with 95% upper and lower statistical confidence intervals.
+## Analytical Pipeline Flow
+
+```text
+Raw Epidemiological Records (CSV / Excel Time-Series Data)
+        │
+        ▼
+Data Cleaning & Datetime Standardization (pd.to_datetime -> Chronological Sorting)
+        │
+        ▼
+Feature & Rate Engineering
+(Active Cases = Confirmed - Recovered - Deaths | Daily Incidence via .diff() | 7-Day Rolling Mean)
+        │
+        ├───────────────────────────────────────────┐
+        ▼                                           ▼
+Interactive Trend Visualization             Facebook Prophet Forecasting
+(Plotly & Matplotlib Growth Curves)         (ds / y Formatting -> 7-Day Future Horizon)
+                                                    │
+                                                    ▼
+                                    Predicted Trajectory & Uncertainty Intervals (yhat, yhat_lower, yhat_upper)
+```
+
+## Key Technical Highlights
+- **Time-Series Aggregation & Rate Calculation:** Standardized multi-region daily case logs into chronological time-series pipelines, computing net active case loads, day-over-day new case velocity using `.diff()`, and 7-day rolling averages to smooth reporting noise.
+- **Interactive Visual Analytics:** Built interactive time-series growth curves and comparative regional trajectories using **Plotly** and **Matplotlib** to highlight inflection points and peak transmission windows.
+- **Additive Time-Series Forecasting with Prophet:** Formatted historical case series into Prophet's `ds` (datestamp) and `y` (target metric) schema to generate **7-day forward projections** complete with upper and lower confidence intervals (`yhat_lower`, `yhat_upper`) and trend/weekly seasonality decomposition plots.
+
+## Tech Stack
+- **Data Manipulation & Time-Series Processing:** Python, Pandas, NumPy
+- **Forecasting Engine:** Facebook Prophet (`prophet`)
+- **Data Visualization:** Plotly, Matplotlib
+
+## Setup & Execution
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Open the Jupyter Notebook in this repository (or launch in Google Colab) and run all cells sequentially to reproduce the rate calculations, interactive charts, and 7-day Prophet forecast diagnostics.
